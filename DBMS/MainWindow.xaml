@@ -48,11 +48,25 @@
         </ComboBox>
         <Label Content="Owner Ratings" HorizontalAlignment="Left" Margin="455,43,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="TitleSearch" HorizontalAlignment="Left" Margin="455,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <RadioButton x:Name="ListMode" Content="To Filter Results" HorizontalAlignment="Left" Margin="29,22,0,0" VerticalAlignment="Top" IsChecked="True"/>
-        <RadioButton x:Name="SearchMode" Content="To Search By Title" HorizontalAlignment="Left" Margin="171,22,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="ListMode" Content="To Filter Results" HorizontalAlignment="Left" Margin="29,22,0,0" VerticalAlignment="Top" IsChecked="True" Checked="ListMode_Checked"/>
+        <RadioButton x:Name="SearchMode" Content="To Search By Title" HorizontalAlignment="Left" Margin="171,22,0,0" VerticalAlignment="Top" Checked="SearchMode_Checked"/>
         <Label Content="Select Desired Option" HorizontalAlignment="Left" Margin="89,-4,0,0" VerticalAlignment="Top"/>
         <Label Content="Title To Search For" HorizontalAlignment="Left" Margin="348,12,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="Process" Content="Search" HorizontalAlignment="Left" Margin="643,70,0,0" VerticalAlignment="Top" Click="Process_Click" IsDefault="True"/>
+        <Button x:Name="Process" Content="Search" HorizontalAlignment="Left" Margin="739,70,0,0" VerticalAlignment="Top" Click="Process_Click" IsDefault="True"/>
+        <ComboBox x:Name="RottenToDrop" HorizontalAlignment="Left" Margin="597,69,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem Content="All" IsSelected="True"/>
+            <ComboBoxItem Content="100-90"/>
+            <ComboBoxItem Content="89-80"/>
+            <ComboBoxItem Content="79-70"/>
+            <ComboBoxItem Content="69-60"/>
+            <ComboBoxItem Content="59-50"/>
+            <ComboBoxItem Content="49-40"/>
+            <ComboBoxItem Content="39-30"/>
+            <ComboBoxItem Content="29-20"/>
+            <ComboBoxItem Content="19-10"/>
+            <ComboBoxItem Content="9-0"/>
+        </ComboBox>
+        <Label Content="Rotten Tomatoes" HorizontalAlignment="Left" Margin="597,43,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
