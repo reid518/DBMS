@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -130,6 +131,27 @@ namespace DBMS
                         Output.Items.Add("All Owner Ratings");
                         break;
                 }
+
+                //Put code here to query
+                string connectionString = ("Data Source=dbms4430_project; Initial Catalog=testdata; User ID=dbms_admin; Password=testpass");
+
+                using (SqlConnection _con = new SqlConnection(connectionString))
+                {
+                    string queryStatement = "SELECT TOP 5 * FROM dbo.Customers ORDER BY CustomerID";
+
+                    using (SqlCommand _cmd = new SqlCommand(queryStatement, _con))
+                    {
+                        System.Data.DataTable customerTable = new System.Data.DataTable("Top5Customers");
+
+                        SqlDataAdapter _dap = new SqlDataAdapter(_cmd);
+
+                        _con.Open();
+                        _dap.Fill(customerTable);
+                        _con.Close();
+
+                    }
+                }
+
             }
             else if (SearchMode.IsChecked == true)
             {
@@ -141,6 +163,11 @@ namespace DBMS
                 //straight to SQL stuff
                 
             }
+        }
+
+        private void Output_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
