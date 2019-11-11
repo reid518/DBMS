@@ -25,6 +25,10 @@ namespace DBMS
         {
             InitializeComponent();
         }
+        public MainWindow(string text) : this()
+        {
+            Output.Items.Add(text);
+        }
 
         private void Process_Click(object sender, RoutedEventArgs e)
         {
@@ -202,5 +206,11 @@ namespace DBMS
             TitleSearch.Clear();
         }
 
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+            AddWindow winAdd = new AddWindow();
+            winAdd.Show();
+            this.Close();
+        }
     }
 }
