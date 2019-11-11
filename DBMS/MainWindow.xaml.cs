@@ -132,26 +132,42 @@ namespace DBMS
                         break;
                 }
 
-                //Put code here to query
-                string connectionString = ("Data Source=dbms4430_project; Initial Catalog=testdata; User ID=dbms_admin; Password=testpass");
-
-                using (SqlConnection _con = new SqlConnection(connectionString))
+        switch (RottenToDrop.SelectedIndex)
                 {
-                    string queryStatement = "SELECT TOP 5 * FROM dbo.Customers ORDER BY CustomerID";
-
-                    using (SqlCommand _cmd = new SqlCommand(queryStatement, _con))
-                    {
-                        System.Data.DataTable customerTable = new System.Data.DataTable("Top5Customers");
-
-                        SqlDataAdapter _dap = new SqlDataAdapter(_cmd);
-
-                        _con.Open();
-                        _dap.Fill(customerTable);
-                        _con.Close();
-
-                    }
+                    case 1:
+                        Output.Items.Add("100-90");
+                        break;
+                    case 2:
+                        Output.Items.Add("89-80");
+                        break;
+                    case 3:
+                        Output.Items.Add("79-70");
+                        break;
+                    case 4:
+                        Output.Items.Add("69-60");
+                        break;
+                    case 5:
+                        Output.Items.Add("59-50");
+                        break;
+                    case 6:
+                        Output.Items.Add("49-40");
+                        break;
+                    case 7:
+                        Output.Items.Add("39-30");
+                        break;
+                    case 8:
+                        Output.Items.Add("29-20");
+                        break;
+                    case 9:
+                        Output.Items.Add("19-10");
+                        break;
+                    case 10:
+                        Output.Items.Add("9-0");
+                        break;
+                    default:
+                        Output.Items.Add("All Tomatoe Ratings");
+                        break;
                 }
-
             }
             else if (SearchMode.IsChecked == true)
             {
@@ -159,6 +175,7 @@ namespace DBMS
                 GenreDrop.SelectedIndex = 0;
                 RatedDrop.SelectedIndex = 0;
                 OwnRateDrop.SelectedIndex = 0;
+                RottenToDrop.SelectedIndex = 0;
                 Output.Items.Add("Searching for " + TitleSearch.Text);
                 //straight to SQL stuff
                 
@@ -169,5 +186,21 @@ namespace DBMS
         {
 
         }
+
+        private void SearchMode_Checked(object sender, RoutedEventArgs e)
+        {
+            OwnerDrop.SelectedIndex = 0;
+            GenreDrop.SelectedIndex = 0;
+            RatedDrop.SelectedIndex = 0;
+            OwnRateDrop.SelectedIndex = 0;
+            RottenToDrop.SelectedIndex = 0;
+
+        }
+
+        private void ListMode_Checked(object sender, RoutedEventArgs e)
+        {
+            TitleSearch.Clear();
+        }
+
     }
 }
