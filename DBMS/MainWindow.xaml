@@ -47,7 +47,7 @@
             <ComboBoxItem Content="1"/>
         </ComboBox>
         <Label Content="Owner Ratings" HorizontalAlignment="Left" Margin="455,43,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="TitleSearch" HorizontalAlignment="Left" Margin="455,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="TitleSearch" HorizontalAlignment="Left" Margin="455,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TitleSearch_TextChanged"/>
         <RadioButton x:Name="ListMode" Content="To Filter Results" HorizontalAlignment="Left" Margin="29,22,0,0" VerticalAlignment="Top" IsChecked="True" Checked="ListMode_Checked"/>
         <RadioButton x:Name="SearchMode" Content="To Search By Title" HorizontalAlignment="Left" Margin="171,22,0,0" VerticalAlignment="Top" Checked="SearchMode_Checked"/>
         <Label Content="Select Desired Option" HorizontalAlignment="Left" Margin="89,-4,0,0" VerticalAlignment="Top"/>

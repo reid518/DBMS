@@ -21,6 +21,9 @@ namespace DBMS
     /// </summary>
     public partial class MainWindow : Window
     {
+        private string beginQuery;
+        private string query;
+        private int queryIndex = 0;
         public MainWindow()
         {
             InitializeComponent();
@@ -33,145 +36,65 @@ namespace DBMS
         private void Process_Click(object sender, RoutedEventArgs e)
         {
             Output.Items.Clear();
+            query = null;
+            queryIndex = 0;
 
             if (ListMode.IsChecked == true)
             {
+
                 TitleSearch.Clear();
                 Output.Items.Add("Searching with filters...");
-                //case statements galore
-                switch (OwnerDrop.SelectedIndex)
-                {
-                    case 1:
-                        Output.Items.Add("Mike");
-                        break;
-                    case 2:
-                        Output.Items.Add("Nathan");
-                        break;
-                    case 3:
-                        Output.Items.Add("Reid");
-                        break;
-                    default:
-                        Output.Items.Add("All Owners");
-                        break;
-                }
 
-                switch (GenreDrop.SelectedIndex)
+                if(OwnerDrop.SelectedIndex != 0)
                 {
-                    case 1:
-                        Output.Items.Add("Action");
-                        break;
-                    case 2:
-                        Output.Items.Add("Comedy");
-                        break;
-                    case 3:
-                        Output.Items.Add("Drama");
-                        break;
-                    case 4:
-                        Output.Items.Add("Rom-Com");
-                        break;
-                    case 5:
-                        Output.Items.Add("Sci-Fi");
-                        break;
-                    case 6:
-                        Output.Items.Add("Horror");
-                        break;
-                    case 7:
-                        Output.Items.Add("Thriller");
-                        break;
-                    case 8:
-                        Output.Items.Add("Western");
-                        break;
-                    case 9:
-                        Output.Items.Add("Animated");
-                        break;
-                    default:
-                        Output.Items.Add("All Genres");
-                        break;
+                    query += "owner = " + OwnerDrop.Text.ToLower();
+                    queryIndex++;
                 }
+                Output.Items.Add(OwnerDrop.Text);
 
-                switch (RatedDrop.SelectedIndex)
+                if (GenreDrop.SelectedIndex != 0)
                 {
-                    case 1:
-                        Output.Items.Add("NR");
-                        break;
-                    case 2:
-                        Output.Items.Add("NC-17");
-                        break;
-                    case 3:
-                        Output.Items.Add("R");
-                        break;
-                    case 4:
-                        Output.Items.Add("PG-13");
-                        break;
-                    case 5:
-                        Output.Items.Add("PG");
-                        break;
-                    case 6:
-                        Output.Items.Add("G");
-                        break;
-                    default:
-                        Output.Items.Add("All Ratings");
-                        break;
+                    if(queryIndex > 0)
+                    {
+                        query += " AND ";
+                    }
+                    query += "genre = " + GenreDrop.Text.ToLower();
+                    queryIndex++;
                 }
+                Output.Items.Add(GenreDrop.Text);
 
-                switch (OwnRateDrop.SelectedIndex)
+                if (RatedDrop.SelectedIndex != 0)
                 {
-                    case 1:
-                        Output.Items.Add("5");
-                        break;
-                    case 2:
-                        Output.Items.Add("4");
-                        break;
-                    case 3:
-                        Output.Items.Add("3");
-                        break;
-                    case 4:
-                        Output.Items.Add("2");
-                        break;
-                    case 5:
-                        Output.Items.Add("1");
-                        break;
-                    default:
-                        Output.Items.Add("All Owner Ratings");
-                        break;
+                    if (queryIndex > 0)
+                    {
+                        query += " AND ";
+                    }
+                    query += "mpaa = " + RatedDrop.Text.ToLower();
+                    queryIndex++;
                 }
+                Output.Items.Add(RatedDrop.Text);
 
-        switch (RottenToDrop.SelectedIndex)
+                if (OwnRateDrop.SelectedIndex != 0)
                 {
-                    case 1:
-                        Output.Items.Add("100-90");
-                        break;
-                    case 2:
-                        Output.Items.Add("89-80");
-                        break;
-                    case 3:
-                        Output.Items.Add("79-70");
-                        break;
-                    case 4:
-                        Output.Items.Add("69-60");
-                        break;
-                    case 5:
-                        Output.Items.Add("59-50");
-                        break;
-                    case 6:
-                        Output.Items.Add("49-40");
-                        break;
-                    case 7:
-                        Output.Items.Add("39-30");
-                        break;
-                    case 8:
-                        Output.Items.Add("29-20");
-                        break;
-                    case 9:
-                        Output.Items.Add("19-10");
-                        break;
-                    case 10:
-                        Output.Items.Add("9-0");
-                        break;
-                    default:
-                        Output.Items.Add("All Tomatoe Ratings");
-                        break;
+                    if (queryIndex > 0)
+                    {
+                        query += " AND ";
+                    }
+                    query += "ownrate = " + OwnRateDrop.Text.ToLower();
+                    queryIndex++;
                 }
+                Output.Items.Add(OwnRateDrop.Text);
+
+                if (RottenToDrop.SelectedIndex != 0)
+                {
+                    if (queryIndex > 0)
+                    {
+                        query += " AND ";
+                    }
+                    query += "rottentomatoes = " + RottenToDrop.Text.ToLower();
+                    queryIndex++;
+                }
+                Output.Items.Add(RottenToDrop.Text);
             }
             else if (SearchMode.IsChecked == true)
             {
@@ -181,9 +104,20 @@ namespace DBMS
                 OwnRateDrop.SelectedIndex = 0;
                 RottenToDrop.SelectedIndex = 0;
                 Output.Items.Add("Searching for " + TitleSearch.Text);
+                query = "title = " + TitleSearch.Text.ToLower();
+                queryIndex++;
                 //straight to SQL stuff
-                
+
             }
+            if(queryIndex == 0)
+            {
+                beginQuery = "SELECT * FROM table;";
+            }
+            else
+            {
+                beginQuery = "SELECT * FROM table WHERE " + query + ";";
+            }
+            Output.Items.Add(beginQuery);
         }
 
         private void Output_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -204,6 +138,7 @@ namespace DBMS
         private void ListMode_Checked(object sender, RoutedEventArgs e)
         {
             TitleSearch.Clear();
+            ListMode.IsChecked = true;
         }
 
         private void Add_Click(object sender, RoutedEventArgs e)
@@ -211,6 +146,11 @@ namespace DBMS
             AddWindow winAdd = new AddWindow();
             winAdd.Show();
             this.Close();
+        }
+
+        private void TitleSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SearchMode.IsChecked = true;
         }
     }
 }
