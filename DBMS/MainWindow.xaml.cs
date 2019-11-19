@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Mono.CSharp;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -16,14 +19,13 @@ using System.Windows.Shapes;
 
 namespace DBMS
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+
         }
 
         private void Process_Click(object sender, RoutedEventArgs e)
@@ -33,141 +35,38 @@ namespace DBMS
             if (ListMode.IsChecked == true)
             {
                 TitleSearch.Clear();
-                Output.Items.Add("Searching with filters...");
-                //case statements galore
-                switch (OwnerDrop.SelectedIndex)
+                //Put code here to query
+                MySqlConnection connect = new MySqlConnection("SERVER=localhost; user id=root; password=root; database=northwind");
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM orders");
+                cmd.CommandType = CommandType.Text;
+                cmd.Connection = connect;
+                connect.Open();
+                try
                 {
-                    case 1:
-                        Output.Items.Add("Mike");
-                        break;
-                    case 2:
-                        Output.Items.Add("Nathan");
-                        break;
-                    case 3:
-                        Output.Items.Add("Reid");
-                        break;
-                    default:
-                        Output.Items.Add("All Owners");
-                        break;
+                    MySqlDataReader dr;
+                    dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+
+                        this.Output.Items.Add(new MyItem { Title = dr.GetString(0), Year = dr.GetString(1), Owner = dr.GetString(2), Genre = dr.GetString(3), MPAA_Rating = dr.GetString(4), Owner_Rating = dr.GetString(6), RT = dr.GetString(7) });
+                    }
+                    dr.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    if (connect.State == ConnectionState.Open)
+                    {
+                        connect.Close();
+                    }
+
                 }
 
-                switch (GenreDrop.SelectedIndex)
-                {
-                    case 1:
-                        Output.Items.Add("Action");
-                        break;
-                    case 2:
-                        Output.Items.Add("Comedy");
-                        break;
-                    case 3:
-                        Output.Items.Add("Drama");
-                        break;
-                    case 4:
-                        Output.Items.Add("Rom-Com");
-                        break;
-                    case 5:
-                        Output.Items.Add("Sci-Fi");
-                        break;
-                    case 6:
-                        Output.Items.Add("Horror");
-                        break;
-                    case 7:
-                        Output.Items.Add("Thriller");
-                        break;
-                    case 8:
-                        Output.Items.Add("Western");
-                        break;
-                    case 9:
-                        Output.Items.Add("Animated");
-                        break;
-                    default:
-                        Output.Items.Add("All Genres");
-                        break;
-                }
 
-                switch (RatedDrop.SelectedIndex)
-                {
-                    case 1:
-                        Output.Items.Add("NR");
-                        break;
-                    case 2:
-                        Output.Items.Add("NC-17");
-                        break;
-                    case 3:
-                        Output.Items.Add("R");
-                        break;
-                    case 4:
-                        Output.Items.Add("PG-13");
-                        break;
-                    case 5:
-                        Output.Items.Add("PG");
-                        break;
-                    case 6:
-                        Output.Items.Add("G");
-                        break;
-                    default:
-                        Output.Items.Add("All Ratings");
-                        break;
-                }
 
-                switch (OwnRateDrop.SelectedIndex)
-                {
-                    case 1:
-                        Output.Items.Add("5");
-                        break;
-                    case 2:
-                        Output.Items.Add("4");
-                        break;
-                    case 3:
-                        Output.Items.Add("3");
-                        break;
-                    case 4:
-                        Output.Items.Add("2");
-                        break;
-                    case 5:
-                        Output.Items.Add("1");
-                        break;
-                    default:
-                        Output.Items.Add("All Owner Ratings");
-                        break;
-                }
-
-        switch (RottenToDrop.SelectedIndex)
-                {
-                    case 1:
-                        Output.Items.Add("100-90");
-                        break;
-                    case 2:
-                        Output.Items.Add("89-80");
-                        break;
-                    case 3:
-                        Output.Items.Add("79-70");
-                        break;
-                    case 4:
-                        Output.Items.Add("69-60");
-                        break;
-                    case 5:
-                        Output.Items.Add("59-50");
-                        break;
-                    case 6:
-                        Output.Items.Add("49-40");
-                        break;
-                    case 7:
-                        Output.Items.Add("39-30");
-                        break;
-                    case 8:
-                        Output.Items.Add("29-20");
-                        break;
-                    case 9:
-                        Output.Items.Add("19-10");
-                        break;
-                    case 10:
-                        Output.Items.Add("9-0");
-                        break;
-                    default:
-                        Output.Items.Add("All Tomatoe Ratings");
-                        break;
-                }
             }
             else if (SearchMode.IsChecked == true)
             {
@@ -202,5 +101,20 @@ namespace DBMS
             TitleSearch.Clear();
         }
 
+        private void Output_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+    }
+
+    internal class MyItem
+    {
+        public string Title { get; set; }
+        public string Year { get; set; }
+        public string Owner { get; set; }
+        public string Genre { get; set; }
+        public string MPAA_Rating { get; set; }
+        public string Owner_Rating { get; set; }
+        public string RT { get; set; }
     }
 }
