@@ -5,18 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DBMS"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Movie Database" Height="514" Width="800">
+    <Grid Height="469">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="393*"/>
             <ColumnDefinition Width="8*"/>
             <ColumnDefinition Width="399*"/>
         </Grid.ColumnDefinitions>
-        <ComboBox x:Name="OwnerDrop" HorizontalAlignment="Left" Margin="29,69,0,0" VerticalAlignment="Top" Width="120">
+        <ComboBox x:Name="OwnerDrop" HorizontalAlignment="Left" Margin="29,69,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="OwnerDrop_SelectionChanged">
             <ComboBoxItem Content="All" IsSelected="True"/>
-            <ComboBoxItem Content="Mike"/>
-            <ComboBoxItem Content="Nathan"/>
-            <ComboBoxItem Content="Reid"/>
         </ComboBox>
         <Label Content="Owners" HorizontalAlignment="Left" Margin="29,43,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="GenreDrop" HorizontalAlignment="Left" Margin="171,69,0,0" VerticalAlignment="Top" Width="120">
@@ -50,12 +47,14 @@
             <ComboBoxItem Content="2"/>
             <ComboBoxItem Content="1"/>
         </ComboBox>
+
         <Label Content="Owner Ratings" HorizontalAlignment="Left" Margin="54,43,0,0" VerticalAlignment="Top" Grid.Column="2"/>
-        <TextBox x:Name="TitleSearch" HorizontalAlignment="Left" Margin="54,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="2"/>
+        <TextBox x:Name="TitleSearch" HorizontalAlignment="Left" Margin="64,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="2" TextChanged="TitleSearch_TextChanged"/>
+
         <RadioButton x:Name="ListMode" Content="To Filter Results" HorizontalAlignment="Left" Margin="29,22,0,0" VerticalAlignment="Top" IsChecked="True" Checked="ListMode_Checked"/>
         <RadioButton x:Name="SearchMode" Content="To Search By Title" HorizontalAlignment="Left" Margin="171,22,0,0" VerticalAlignment="Top" Checked="SearchMode_Checked"/>
         <Label Content="Select Desired Option" HorizontalAlignment="Left" Margin="89,-4,0,0" VerticalAlignment="Top"/>
-        <Label Content="Title To Search For" HorizontalAlignment="Left" Margin="348,12,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
+        <Label Content="Title To Search For:" HorizontalAlignment="Left" Margin="348,12,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
         <Button x:Name="Process" Content="Search" HorizontalAlignment="Left" Margin="338,70,0,0" VerticalAlignment="Top" Click="Process_Click" IsDefault="True" Grid.Column="2"/>
         <ComboBox x:Name="RottenToDrop" HorizontalAlignment="Left" Margin="196,69,0,0" VerticalAlignment="Top" Width="120" Grid.Column="2">
             <ComboBoxItem Content="All" IsSelected="True"/>
@@ -71,7 +70,7 @@
             <ComboBoxItem Content="9-0"/>
         </ComboBox>
         <Label Content="Rotten Tomatoes" HorizontalAlignment="Left" Margin="196,43,0,0" VerticalAlignment="Top" Grid.Column="2"/>
-        <ListView x:Name="Output" Margin="0,112,0,0" HorizontalAlignment="Left" Width="800" Height="322" VerticalAlignment="Top" Grid.ColumnSpan="3" SelectionChanged="Output_SelectionChanged_1">
+        <ListView x:Name="Output" Margin="0,135,0,0" HorizontalAlignment="Left" Width="800" Height="334" VerticalAlignment="Top" Grid.ColumnSpan="3" SelectionChanged="Output_SelectionChanged_1">
             <ListView.View>
                 <GridView ColumnHeaderStringFormat="Data">
                     <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Title}"/>
@@ -84,6 +83,12 @@
                 </GridView>
             </ListView.View>
         </ListView>
+
+        <Label Content="Rotten Tomatoes" HorizontalAlignment="Left" Margin="597,43,0,0" VerticalAlignment="Top"/>
+
+        <Button x:Name="Add" Content="Add Movie" Grid.Column="2" HorizontalAlignment="Left" Margin="225,102,0,0" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button x:Name="Delete" Content="Delete Movie" Grid.Column="2" HorizontalAlignment="Left" Margin="303,102,0,0" VerticalAlignment="Top" Click="Delete_Click"/>
+        <Button x:Name="addnewowner" Content="Add New Owner" HorizontalAlignment="Left" Margin="29,102,0,0" VerticalAlignment="Top" Click="addnewowner_Click"/>
 
     </Grid>
 </Window>

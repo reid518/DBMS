@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.0.0" />
     <PackageReference Include="ICSharpCode.NRefactory" Version="5.5.1" />
     <PackageReference Include="MySql.Data" Version="8.0.18" />
     <PackageReference Include="System.Data.SqlClient" Version="4.7.0" />
